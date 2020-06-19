@@ -10,6 +10,7 @@ if(isset($_POST['number'])){
     $url = 'https://sandbox.wallets.africa/bills/airtime/purchase';
     $secretKey = 'hfucj5jatq8h';
     $publicKey = 'uvjqzm5xl6bw';
+
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
