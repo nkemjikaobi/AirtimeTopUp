@@ -60,32 +60,34 @@ if(isset($_POST['number'])){
     </nav>
     <div class="container">
         <h2>Send airtime topup</h2>
+        <form action="" id="cut" method="POST">
 
 
     <table class='table table-bordered'>
-        <tr>
-            <th>Number</th>
-            <th>Amount</th>
-            <th>Network</th>
-        </tr>
-        <form action="" id="cut" method="POST">
-                <tr>
-                    <td><input type="text" name="number[]"></td>
-                    <td><input type="text" name="amount[]"></td>
-                    <td> <select class="mt-5 pl-3" name="network[]">
-                            <option value="null">Select Network</option>
-                            <option value="glo">GLO</option>
-                            <option value="mtn">MTN</option>
-                            <option value="airtel">AIRTEL</option>
-                            <option value="9mobile">9MOBILE</option>
-                        </select></td>
-                </tr>
-            <span id="doinger">
+        <tbody>
 
-            </span>
+            <tr>
+                <th>Number</th>
+                <th>Amount</th>
+                <th>Network</th>
+            </tr>
 
-        </form>
+            <tr>
+                <td><input type="text" name="number[]"></td>
+                <td><input type="text" name="amount[]"></td>
+                <td> <select class="mt-5 pl-3" name="network[]">
+                        <option value="null">Select Network</option>
+                        <option value="glo">GLO</option>
+                        <option value="mtn">MTN</option>
+                        <option value="airtel">AIRTEL</option>
+                        <option value="9mobile">9MOBILE</option>
+                    </select></td>
+            </tr>
+
+        </tbody>
+
     </table>
+        </form>
 
         <a class="btn btn-primary" id="added">ADD INTERN</a>
         <br>
