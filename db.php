@@ -1,6 +1,6 @@
 <?php
 
-$conn = new mysqli('localhost','root','ukpongson95','topup');
+$conn = new mysqli('localhost','root','','topup');
 
 if(!$conn){
     die('Error');

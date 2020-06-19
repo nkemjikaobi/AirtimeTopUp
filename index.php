@@ -23,12 +23,12 @@ if(isset($_POST['btn-add'])){
 }
 
 if(isset($_POST['btn-add2'])){
-    $name = $_POST['name'];
+    $number = $_POST['number'];
     $username = $_POST['username'];
     $amount = $_POST['amount'];
     $network = $_POST['network'];
 
-    $sql =  $conn->query("INSERT INTO interns(name,username,amount,network) VALUES('$name','$username','$amount','$network')");
+    $sql =  $conn->query("INSERT INTO interns(number,username,amount,network) VALUES('$number','$username','$amount','$network')");
 
     if($sql){
         $error = "<div class='container'>
@@ -55,13 +55,16 @@ if(isset($_GET['edit'])){
     $form_edit = "
     <form action='' method='post'>
     <div class='form-group' style='width:60%;margin:auto;'>
-        <input type='text' name='name' placeholder='Enter interns name' value= '$data->name' class='form-control'>
+        <input type='text' name='number' value= '$data->number' class='form-control'>
     </div><br>
     <div class='form-group' style='width:60%;margin:auto;'>
-        <input type='text' name='username' placeholder='Enter interns username' value= '$data->username' class='form-control'>
+        <input type='text' name='username' value= '$data->username' class='form-control'>
     </div><br>
     <div class='form-group' style='width:60%;margin:auto;'>
-        <input type='text' name='amount' placeholder='Enter amount you wish to send' value= '$data->amount' class='form-control'>
+        <input type='text' name='amount'  value= '$data->amount' class='form-control'>
+    </div><br>
+    <div class='form-group' style='width:60%;margin:auto;'>
+        <input type='text' name='amount' value= '$data->network' class='form-control'>
     </div><br>
     <div class='form-group' style='width:60%;margin:auto;'>
         <input type='submit' value='EDIT' name='btn-edit' class='btn btn-success'>
@@ -72,11 +75,13 @@ if(isset($_GET['edit'])){
 
 if(isset($_POST['btn-edit'])){
     $id = $_GET['edit'];
-    $name = $_POST['name'];
+    $name = $_POST['number'];
     $username = $_POST['username'];
     $amount = $_POST['amount'];
+    $network = $_POST['network'];
 
-    $sql =  $conn->query("UPDATE interns SET name='$name',username='$username',amount='$amount' WHERE id='$id'");
+
+    $sql =  $conn->query("UPDATE interns SET number='$number',username='$username',amount='$amount',network='$network' WHERE id='$id'");
 
     if($sql){
         $error = "<div class='container'>
@@ -181,7 +186,7 @@ if(isset($_POST['check'])){
     <table class='table table-bordered'>
         <tr>
             <th>ID</th>
-            <th>Name</th>
+            <th>Number</th>
             <th>Username</th>
             <th>Amount</th>
             <th>Network</th>
