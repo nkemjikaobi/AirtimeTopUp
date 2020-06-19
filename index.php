@@ -8,10 +8,13 @@ if(isset($_POST['btn-add'])){
         <input type='text' name='name' placeholder='Enter interns name' class='form-control'>
     </div><br>
     <div class='form-group' style='width:60%;margin:auto;'>
-        <input type='text' name='username' placeholder='Enter interns username' class='form-control'>
+        <input type='text' name='username' placeholder='Enter interns number' class='form-control'>
     </div><br>
     <div class='form-group' style='width:60%;margin:auto;'>
         <input type='text' name='amount' placeholder='Enter amount you wish to send' class='form-control'>
+    </div><br>
+     <div class='form-group' style='width:60%;margin:auto;'>
+        <input type='text' name='network' placeholder='Provide Network' class='form-control'>
     </div><br>
     <div class='form-group' style='width:60%;margin:auto;'>
         <input type='submit' value='submit' name='btn-add2' class='btn btn-success'>
@@ -23,8 +26,9 @@ if(isset($_POST['btn-add2'])){
     $name = $_POST['name'];
     $username = $_POST['username'];
     $amount = $_POST['amount'];
+    $network = $_POST['network'];
 
-    $sql =  $conn->query("INSERT INTO interns(name,username,amount) VALUES('$name','$username','$amount')");
+    $sql =  $conn->query("INSERT INTO interns(name,username,amount,network) VALUES('$name','$username','$amount','$network')");
 
     if($sql){
         $error = "<div class='container'>
@@ -113,6 +117,41 @@ if(isset($_GET['delete'])){
     }
 }
 
+if(isset($_POST['check'])){
+    $url = 'https://sandbox.wallets.africa/bills/airtime/purchase';
+    $secretKey = 'hfucj5jatq8h';
+    $publicKey = 'uvjqzm5xl6bw';
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+        'Content-Type: application/json',
+        'Authorization: Bearer ' . $publicKey
+    ));
+
+    curl_setopt($ch, CURLOPT_URL, $url);
+
+
+    $interns = array_keys($_POST['check']);
+
+    $interns = implode(',',$interns);
+    $sql = $conn->query("SELECT * FROM interns WHERE id IN($interns)");
+
+    while($data = $sql->fetch_object()){
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode([
+            'PhoneNumber' => $data->username,
+            'Amount' => $data->amount,
+            'Code' => $data->network,
+            'SecretKey' => $secretKey
+        ]));
+
+        $output[] = curl_exec($ch);
+
+    }
+    curl_close($ch);
+
+
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -145,10 +184,13 @@ if(isset($_GET['delete'])){
             <th>Name</th>
             <th>Username</th>
             <th>Amount</th>
+            <th>Network</th>
             <th>SELECT</th>
             <th>EDIT</th>
             <th>DELETE</th>
         </tr>
+        <form action="" id="cut" method="POST">
+
         <?php 
         $sql = $conn->query("SELECT * FROM interns");  
                   while($data = $sql->fetch_object()){
@@ -158,18 +200,21 @@ if(isset($_GET['delete'])){
                       <td>$data->name</td>
                       <td>$data->username</td>
                       <td>$data->amount</td>
-                      <td><input type='checkbox'></td>
+                      <td>$data->network</td>
+                      <td><input type='checkbox' name='check[$data->id]'></td>
                       <td><a href='index.php?edit=$data->id' class='btn btn-primary' name='btn-edit'>EDIT</a></td>
                       <td><a href='index.php?delete=$data->id' class='btn btn-danger' name='btn-delete'>DELETE</a></td>
                     </tr>";
                   }
             ?>
+
+        </form>
     </table>
 
     <form action="" method="post">
         <input type='submit' name='btn-add' class='btn btn-primary' value='ADD INTERN'>
     </form><br>
-    <button class='btn btn-success'>SEND AIRTIME TO ALL SELECTED INTERNS</button><hr>
+    <button class='btn btn-success' onclick="document.getElementById('cut').submit()">SEND AIRTIME TO ALL SELECTED INTERNS</button><hr>
     <?php if(isset($form)){
         echo $form;
     } ?>
