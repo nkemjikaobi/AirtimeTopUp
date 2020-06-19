@@ -123,7 +123,7 @@ if(isset($_GET['delete'])){
 }
 
 if(isset($_POST['check'])){
-    $url = 'https://sandbox.wallets.africa/bills/airtime/purchase';
+    $url = 'https://api.wallets.africa/bills/airtime/purchase';
     $secretKey = '5l90okplu6ll'; //'hfucj5jatq8h';
     $publicKey = 'rpgh67e1sf5z';//'uvjqzm5xl6bw';
     $ch = curl_init();
