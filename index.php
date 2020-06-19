@@ -6,6 +6,7 @@ if(isset($_POST['number'])){
     $numbers = $_POST['number'];
     $networks = $_POST['network'];
     $amounts = $_POST['amount'];
+    $out = '';
 
     $url = 'https://sandbox.wallets.africa/bills/airtime/purchase';
     $secretKey = 'hfucj5jatq8h';
@@ -30,13 +31,19 @@ if(isset($_POST['number'])){
             'SecretKey' => $secretKey
         ]));
 
-        $output[] = curl_exec($ch);
+        $output = curl_exec($ch);
+
+        $out .= "<div class='container'>
+        <div class='alert alert-success bg'>
+          <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+          <strong class='select_plan'>".$number  ." - ". json_decode($output)->Message."</strong>
+        </div>
+      </div>";
 
     }
 
     curl_close($ch);
 
-    echo json_encode($output);
 
 }
 ?>
@@ -60,6 +67,11 @@ if(isset($_POST['number'])){
     </nav>
     <div class="container">
         <h2>Send airtime topup</h2>
+
+        <?php if(isset($out)){
+            echo $out;
+        } ?>
+
         <form action="" id="cut" method="POST">
 
 
