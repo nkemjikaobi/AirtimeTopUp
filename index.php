@@ -5,10 +5,10 @@ if(isset($_POST['btn-add'])){
     $form = "
     <form action='' method='post'>
     <div class='form-group' style='width:60%;margin:auto;'>
-        <input type='text' name='name' placeholder='Enter interns name' class='form-control'>
+        <input type='text' name='username' placeholder='Enter interns username' class='form-control'>
     </div><br>
     <div class='form-group' style='width:60%;margin:auto;'>
-        <input type='text' name='username' placeholder='Enter interns number' class='form-control'>
+        <input type='text' name='number' placeholder='Enter interns number' class='form-control'>
     </div><br>
     <div class='form-group' style='width:60%;margin:auto;'>
         <input type='text' name='amount' placeholder='Enter amount you wish to send' class='form-control'>
@@ -17,7 +17,7 @@ if(isset($_POST['btn-add'])){
         <input type='text' name='network' placeholder='Provide Network' class='form-control'>
     </div><br>
     <div class='form-group' style='width:60%;margin:auto;'>
-        <input type='submit' value='submit' name='btn-add2' class='btn btn-success'>
+        <input type='submit' value='SUBMIT' name='btn-add2' class='btn btn-success'>
     </div>
 </form>";
 }
@@ -64,7 +64,7 @@ if(isset($_GET['edit'])){
         <input type='text' name='amount'  value= '$data->amount' class='form-control'>
     </div><br>
     <div class='form-group' style='width:60%;margin:auto;'>
-        <input type='text' name='amount' value= '$data->network' class='form-control'>
+        <input type='text' name='network' value= '$data->network' class='form-control'>
     </div><br>
     <div class='form-group' style='width:60%;margin:auto;'>
         <input type='submit' value='EDIT' name='btn-edit' class='btn btn-success'>
@@ -75,7 +75,7 @@ if(isset($_GET['edit'])){
 
 if(isset($_POST['btn-edit'])){
     $id = $_GET['edit'];
-    $name = $_POST['number'];
+    $number = $_POST['number'];
     $username = $_POST['username'];
     $amount = $_POST['amount'];
     $network = $_POST['network'];
@@ -124,8 +124,8 @@ if(isset($_GET['delete'])){
 
 if(isset($_POST['check'])){
     $url = 'https://sandbox.wallets.africa/bills/airtime/purchase';
-    $secretKey = 'hfucj5jatq8h';
-    $publicKey = 'uvjqzm5xl6bw';
+    $secretKey = '5l90okplu6ll'; //'hfucj5jatq8h';
+    $publicKey = 'rpgh67e1sf5z';//'uvjqzm5xl6bw';
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
@@ -143,7 +143,7 @@ if(isset($_POST['check'])){
 
     while($data = $sql->fetch_object()){
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode([
-            'PhoneNumber' => $data->username,
+            'PhoneNumber' => $data->number,
             'Amount' => $data->amount,
             'Code' => $data->network,
             'SecretKey' => $secretKey
@@ -202,7 +202,7 @@ if(isset($_POST['check'])){
                    echo " 
                     <tr>
                       <td>$data->id</td>
-                      <td>$data->name</td>
+                      <td>$data->number</td>
                       <td>$data->username</td>
                       <td>$data->amount</td>
                       <td>$data->network</td>
