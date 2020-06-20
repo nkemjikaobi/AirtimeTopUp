@@ -43,7 +43,7 @@ if(isset($_POST['number'])){
     }
 
     curl_close($ch);
-
+unset($_POST['number]);
 
 }
 ?>
@@ -70,6 +70,7 @@ if(isset($_POST['number'])){
 
         <?php if(isset($out)){
             echo $out;
+            unset($out);
         } ?>
 
         <form action="" id="cut" method="POST">
